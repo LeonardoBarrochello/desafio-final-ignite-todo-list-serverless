@@ -66,14 +66,13 @@ const serverlessConfiguration: AWS = {
                 AttributeName : "id",
                 AttributeType  :"S" ,
                 
-              }
-          
+              },      
             ],
             KeySchema : [
               {
                 AttributeName : "id",
                 KeyType : "HASH"
-              },
+              },           
             ]
           }
         }

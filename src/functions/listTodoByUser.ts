@@ -13,14 +13,13 @@ export const handler : APIGatewayProxyHandler  = async (event) => {
 
         const { id : user_id} = event.pathParameters;
 
-        const response = await document.query({
-            TableName : "todos",
-            KeyConditionExpression : "user_id = :user_id",
-            ExpressionAttributeValues : {
-                ":user_id" : user_id
-            },
-           
-        }).promise()
+        const response = await document.scan({
+            TableName: 'todos',
+            FilterExpression: 'user_id = :user_id',
+            ExpressionAttributeValues: {
+                ':user_id': user_id
+            }
+            }).promise();
 
         var todos = response.Items as ITodo[] ;
 
@@ -29,6 +28,7 @@ export const handler : APIGatewayProxyHandler  = async (event) => {
                 statusCode : 201,
                 body  : JSON.stringify({
                     status : "OK",
+                    _count : todos.length,
                     todos
                 })
              }
